@@ -1,0 +1,22 @@
+{
+  "name": "react-express",
+  "version": "1.0.0",
+  "description": "Test react and node.js app",
+  "main": "server.js",
+  "scripts": {
+    "client-install" : "cd client && npm install",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "cd.. && cd client && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\" "
+  },
+  "author": "Przemysław żydek",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^3.5.1",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
+}
