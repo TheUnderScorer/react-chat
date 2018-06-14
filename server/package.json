@@ -4,7 +4,7 @@
   "description": "Test react and node.js app",
   "main": "server.js",
   "scripts": {
-    "client-install" : "cd client && npm install",
+    "client-install": "cd client && npm install",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "cd.. && cd client && npm start",
@@ -17,6 +17,16 @@
     "express": "^4.16.3"
   },
   "devDependencies": {
-    "nodemon": "^1.17.5"
+    "nodemon": "^1.17.5",
+    "bcrypt": "^2.0.1",
+    "body-parser": "^1.18.2",
+    "connect-mongo": "^2.0.1",
+    "email-validator": "^2.0.3",
+    "express": "^4.15.2",
+    "express-session": "^1.15.6",
+    "handlebars": "^4.0.11",
+    "mongoose": "^5.0.17",
+    "nodemailer": "^4.6.4",
+    "socket.io": "^2.1.0"
   }
 }
