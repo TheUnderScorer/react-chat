@@ -3,8 +3,12 @@
  * */
 class Api {
 
-	static fetch(url, opts = {}){
-		return fetch( Api.endpoint + '' + url, opts ).then(res => res.json());
+	static fetch( url, opts = {} ) {
+
+		//Remove trailing slash
+		url = url.replace( '/', '' );
+
+		return fetch( `${Api.endpoint}/${url}`, opts ).then(data => data.json());
 	}
 
 	/**
@@ -14,13 +18,13 @@ class Api {
 	 * */
 	static isLoggedIn() {
 
-		return Api.fetch('/is_logged_in');
+		return Api.fetch( '/is_logged_in' );
 
 	}
 
 }
 
 /** @property {String} */
-Api.endpoint = '/api';
+Api.endpoint = '/api/';
 
 export default Api;

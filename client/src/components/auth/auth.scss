@@ -1,0 +1,70 @@
+@import "../../assets/css/variables";
+
+.login, .register {
+	background: url('../../assets/images/login_bg.png') center no-repeat;
+	height: 100%;
+}
+
+.form-section {
+	display: flex;
+	padding: 10px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	label{
+		font-size: 16px;
+		margin-bottom: 5px;
+	}
+	input{
+		padding: 10px;
+		box-sizing: border-box;
+		outline: none;
+		border: none;
+		border-bottom: 1px solid #4a4a4a;
+		&:focus{
+			border-color: $blue;
+		}
+	}
+}
+
+.submit-section {
+	[type=submit] {
+		background: $blue;
+		cursor: pointer;
+		color: $white;
+		border: none;
+		padding: 20px;
+		font-size: 17px;
+		border-radius: 5px;
+		width: 150px;
+	}
+}
+
+.has-error{
+
+	> input, > select{
+		border-bottom: 2px solid $red;
+	}
+	.error{
+		margin-top: 10px;
+		color: $red;
+		font-size: 15px;
+	}
+}
+
+.links{
+	> a {
+		&:not(:last-of-type)::after{
+			content: '|';
+			position: relative;
+			left: 2px;
+			margin: 0 3px;
+		}
+		font-size: 15px;
+		text-decoration: none;
+		color: $black;
+		&:hover{
+			text-decoration: underline;
+		}
+	}
+}

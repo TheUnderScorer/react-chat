@@ -1,24 +1,22 @@
 import React, {Component} from 'react';
 
-class Header extends Component{
+class Header extends Component {
 
-	constructor(){
+	constructor() {
 
 		super();
 
-		this.state = {
-
-		}
+		this.state = {}
 
 	}
 
-	render(){
+	render() {
 
-		return()
+		return (
 			<header className="header">
-
+				Header
 			</header>
-
+		)
 
 	}
 
