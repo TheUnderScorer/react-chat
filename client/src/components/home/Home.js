@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Api from '../../helpers/Api';
 import Login from '../auth/Login';
 import Container from '../Container';
+import Header from "../header/Header";
 
 class Home extends Component {
 

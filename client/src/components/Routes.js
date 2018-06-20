@@ -3,8 +3,9 @@ import {Switch, Route} from 'react-router-dom';
 import Home from './home/Home';
 import Login from "./auth/Login";
 import Container from "./Container";
+import Register from "./auth/Register";
 
-class Main extends Component {
+class Routes extends Component {
 
 	render() {
 
@@ -16,6 +17,11 @@ class Main extends Component {
 						<Login/>
 					</Container>
 				</Route>
+				<Route path="/register">
+					<Container className="register">
+						<Register/>
+					</Container>
+				</Route>
 			</Switch>
 		)
 
@@ -23,4 +29,4 @@ class Main extends Component {
 
 }
 
-export default Main;
+export default Routes;
