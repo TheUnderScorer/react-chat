@@ -4,6 +4,8 @@ const connection     = require( './connection' ),
 	  EmailValidator = require( 'email-validator' ),
 	  Validator      = require( '../helpers/Validator' ),
 	  JsonResponse   = require( '../helpers/JsonResponse' ),
+	  Utility = require('../helpers/Utility'),
+	  isset = Utility.isset,
 	  schema         = new mongoose.Schema( {
 		  email:     {
 			  type:     String,
@@ -51,12 +53,6 @@ schema.pre( 'save', function( next ) {
 	} );
 
 } );
-/**
- * Checks if user is logged in
- *
- * @return {boolean}
- * */
-const isLoggedIn = req => req.session && req.session.userId;
 
 schema.statics.authenticate = async function( emailOrLogin, password, callback ) {
 
@@ -82,7 +78,12 @@ schema.statics.authenticate = async function( emailOrLogin, password, callback )
 module.exports = {
 	model:      model,
 	schema:     schema,
-	isLoggedIn: isLoggedIn,
+	/**
+	 * Checks if user is logged in
+	 *
+	 * @return {Boolean}
+	 * */
+	isLoggedIn: req => isset(req.session) && isset(req.session.userId),
 
 	/**
 	 * Get user data by his id

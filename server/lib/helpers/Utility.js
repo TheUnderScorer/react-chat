@@ -10,7 +10,7 @@ class Utility {
 	 *
 	 * @return {Boolean}
 	 * */
-	isset( value ) {
+	static isset( value ) {
 		return typeof value !== 'undefined';
 	}
 
