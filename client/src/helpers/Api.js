@@ -3,12 +3,26 @@
  * */
 class Api {
 
-	static fetch( url, opts = {} ) {
+	/** @property {String} API endpoint */
+	static endpoint = '/api';
+
+	static post( url, opts ) {
+
+		opts.method = 'POST';
 
 		//Remove trailing slash
 		url = url.replace( '/', '' );
 
-		return fetch( `${Api.endpoint}/${url}`, opts ).then(data => data.json());
+		return fetch( `http://localhost:5000${Api.endpoint}/${url}`, opts ).then( data => data.json() );
+
+	}
+
+	static get( url, opts = {} ) {
+
+		//Remove trailing slash
+		url = url.replace( '/', '' );
+
+		return fetch( `${Api.endpoint}/${url}`, opts ).then( data => data.json() );
 	}
 
 	/**
@@ -18,13 +32,11 @@ class Api {
 	 * */
 	static isLoggedIn() {
 
-		return Api.fetch( '/is_logged_in' );
+		return Api.get( '/is_logged_in' );
 
 	}
 
 }
 
-/** @property {String} */
-Api.endpoint = '/api/';
 
 export default Api;

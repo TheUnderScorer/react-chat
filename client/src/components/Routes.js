@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, Link} from 'react-router-dom';
 import Home from './home/Home';
 import Login from "./auth/Login";
 import Container from "./Container";
 import Register from "./auth/Register";
+import PageBox from "./page-box/PageBox";
 
 class Routes extends Component {
 
@@ -12,16 +13,15 @@ class Routes extends Component {
 		return (
 			<Switch>
 				<Route exact path="/" component={Home}/>
-				<Route path="/login">
-					<Container className="login">
-						<Login/>
-					</Container>
-				</Route>
+
 				<Route path="/register">
 					<Container className="register">
-						<Register/>
+						<PageBox return="/">
+							<Register/>
+						</PageBox>
 					</Container>
 				</Route>
+
 			</Switch>
 		)
 
