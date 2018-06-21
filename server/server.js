@@ -33,13 +33,9 @@ App.get( '/api/get-token', async ( req, res ) => {
 	const Json = new JsonResponse();
 
 	if ( !req.session.token ) {
-		Crypto.randomBytes( 48, ( err, buffer ) => {
-			let token = buffer.toString( 'hex' );
-
-			Json.result = token;
-			req.session.token = token;
-
-		} );
+		let token = Crypto.randomBytes( 48 ).toString('hex');
+		req.session.token = token;
+		Json.result = token
 	} else {
 		Json.result = req.session.token;
 	}

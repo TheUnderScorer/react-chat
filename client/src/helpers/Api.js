@@ -18,8 +18,9 @@ class Api {
 	static getToken() {
 
 		Api.get( '/get-token' ).then( data => {
+			console.log( data );
 			Api.token = data.result
-		} ).catch( e => console.log( e ) );
+		} ).catch( e => console.error( e ) );
 
 	}
 

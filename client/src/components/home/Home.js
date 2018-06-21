@@ -3,6 +3,7 @@ import Api from '../../helpers/Api';
 import Login from '../auth/Login';
 import Container from '../Container';
 import Header from "../header/Header";
+import Loader from "../loader/Loader";
 
 class Home extends Component {
 
@@ -12,21 +13,32 @@ class Home extends Component {
 
 		this.state = {
 			isLoggedIn: null,
+			isLoading:  true,
 		}
 
 	}
 
 	componentDidMount() {
 
-		Api.isLoggedIn().then( data => this.setState( {
-			isLoggedIn: data.result
-		} ) )
+		this.setState( { isLoading: true } );
+		Api.isLoggedIn().then( data => {
+			this.setState( {
+				isLoggedIn: data.result,
+				isLoading:  false,
+			} )
+		} )
 
 	}
 
 	render() {
 
-		if ( !this.state.isLoggedIn ) {
+		let state = this.state;
+
+		if ( state.isLoading ) {
+			return <Loader/>
+		}
+
+		if ( !state.isLoggedIn ) {
 			return (
 				<Container className='login'>
 					<Login/>
