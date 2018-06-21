@@ -63,13 +63,13 @@ App.post( '/api/login', async ( req, res ) => {
 } );
 
 //Handle logout
-App.get( '/api/logout', function( req, res ) {
+App.get( '/api/logout', ( req, res ) => {
 
 	const Json = new JsonResponse();
 
 	if ( req.session ) {
-		// delete session object
-		return req.session.destroy( function( err ) {
+		//Destroy session
+		return req.session.destroy( ( err ) => {
 			if ( err ) {
 				Json.addMessage( err, 'error' );
 			} else {
