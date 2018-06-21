@@ -10,7 +10,7 @@ const NodeMailer = require( 'nodemailer' ),
 			  },
 			  auth:   {
 				  user: 'przemyslawzydek1@gmail.com',
-				  pass: 'asasyn12345'
+				  pass: '###'
 			  },
 		  }
 	  );
