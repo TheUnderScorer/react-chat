@@ -1,7 +1,7 @@
 const Utility = require( './Utility' );
 
 /**
- * Helper class for validatin stuff
+ * Helper class for validating stuff
  * */
 class Validator {
 

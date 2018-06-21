@@ -1,9 +1,15 @@
+/**
+ * Creates and manages user table in database
+ *
+ * @file user.js
+ *
+ * */
+
 const connection     = require( './connection' ),
 	  mongoose       = require( 'mongoose' ),
 	  bcrypt         = require( 'bcrypt' ),
 	  EmailValidator = require( 'email-validator' ),
 	  Validator      = require( '../helpers/Validator' ),
-	  JsonResponse   = require( '../helpers/JsonResponse' ),
 	  Utility        = require( '../helpers/Utility' ),
 	  isset          = Utility.isset,
 	  schema         = new mongoose.Schema( {
@@ -54,12 +60,12 @@ schema.pre( 'save', function( next ) {
 
 } );
 
+//Validate user password
 schema.statics.authenticate = async function( emailOrLogin, password ) {
 
 	const data = EmailValidator.validate( emailOrLogin ) ? { email: emailOrLogin } : { login: emailOrLogin };
 
-	let error   = false,
-		user    = await model.findOne( data ),
+	let user    = await model.findOne( data ),
 		compare = bcrypt.compareSync( password, user.password );
 
 	if ( user && compare ) {

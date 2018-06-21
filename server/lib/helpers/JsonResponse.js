@@ -1,3 +1,7 @@
+
+/**
+ * Used for JSON responses
+ * */
 class JsonResponse {
 
 	constructor() {
