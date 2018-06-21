@@ -5,14 +5,15 @@
  *
  * */
 
-const connection     = require( './connection' ),
-	  mongoose       = require( 'mongoose' ),
-	  bcrypt         = require( 'bcrypt' ),
-	  EmailValidator = require( 'email-validator' ),
-	  Validator      = require( '../helpers/Validator' ),
-	  Utility        = require( '../helpers/Utility' ),
-	  isset          = Utility.isset,
-	  schema         = new mongoose.Schema( {
+const connection        = require( './connection' ),
+	  mongoose          = require( 'mongoose' ),
+	  bcrypt            = require( 'bcrypt' ),
+	  EmailValidator    = require( 'email-validator' ),
+	  Validator         = require( '../helpers/Validator' ),
+	  Utility           = require( '../helpers/Utility' ),
+	  EmailVerification = require( './email-verification' ),
+	  isset             = Utility.isset,
+	  schema            = new mongoose.Schema( {
 		  email:     {
 			  type:     String,
 			  unique:   true,
@@ -45,7 +46,7 @@ const connection     = require( './connection' ),
 			  trim:     true
 		  }
 	  } ),
-	  model          = connection.model( 'user', schema );
+	  model             = connection.model( 'user', schema );
 
 //Encrypt user password before saving it
 schema.pre( 'save', function( next ) {
@@ -142,8 +143,11 @@ module.exports = {
 		}
 
 		try {
+
 			const user   = new model( data ),
 				  result = await user.save();
+
+			EmailVerification.sendValidationEmail( result );
 
 			messages.push( {
 				message: 'Successfuly registered',
