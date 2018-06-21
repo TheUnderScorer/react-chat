@@ -54,35 +54,19 @@ schema.pre( 'save', function( next ) {
 
 } );
 
-schema.statics.authenticate = async function( emailOrLogin, password, callback ) {
+schema.statics.authenticate = async function( emailOrLogin, password ) {
 
 	const data = EmailValidator.validate( emailOrLogin ) ? { email: emailOrLogin } : { login: emailOrLogin };
 
-	let error = false;
+	let error   = false,
+		user    = await model.findOne( data ),
+		compare = bcrypt.compareSync( password, user.password );
 
-	let result = await model.findOne( data, ( err, user ) => {
-
-		if ( err ) {
-			error = err;
-		} else if ( !user ) {
-			error = 'Invalid e-mail or password';
-		}
-
-		if ( !error ) {
-			bcrypt.compare( password, user.password, function( err, result ) {
-				if ( result ) {
-					return user;
-				}
-				error = 'Invalid e-mail or password';
-			} );
-		}
-	} );
-
-	if ( result ) {
-		return result;
+	if ( user && compare ) {
+		return user;
 	}
 
-	throw error;
+	throw 'Invalid credentials';
 
 };
 

@@ -20,12 +20,16 @@ class Login extends Form {
 		const Fd = new FormData( e.target );
 
 		Api.post( '/login', Fd ).then( data => {
-			console.log( data );
 			this.setState( {
 				isLoading: false,
 				messages:  data.messages,
 				result:    data.result
 			} );
+
+			if ( data.result ) {
+				setTimeout( () => window.location.reload(), 1000 );
+			}
+
 		} )
 
 	}

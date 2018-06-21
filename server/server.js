@@ -73,15 +73,33 @@ App.post( '/api/login', async ( req, res ) => {
 
 		Json.result = true;
 
-		Json.addMessage('Logged in!', 'success');
+		Json.addMessage( 'Logged in!', 'success' );
 
 	} catch ( e ) {
-
 		Json.addMessage( e, 'error' );
 	}
 
 	return res.json( Json );
 
+} );
+
+//Handle logout
+App.get( '/api/logout', function( req, res ) {
+
+	const Json = new JsonResponse();
+
+	if ( req.session ) {
+		// delete session object
+		return req.session.destroy( function( err ) {
+			if ( err ) {
+				Json.addMessage( err, 'error' );
+			} else {
+				Json.addMessage( 'Logged out', 'success' );
+				Json.result = true;
+			}
+			return res.json( Json );
+		} );
+	}
 } );
 
 //Handle register
