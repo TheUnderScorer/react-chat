@@ -53,7 +53,7 @@ App.post( '/api/login', async ( req, res ) => {
 
 	const Json = new JsonResponse();
 
-	if ( !req.body.loginOrEmail ) {
+	if ( !req.body.email_or_login ) {
 		Json.addMessage( 'Login or email are required.', 'error' );
 	}
 
@@ -66,14 +66,17 @@ App.post( '/api/login', async ( req, res ) => {
 	}
 
 	try {
-		const user = await User.getUserId( req.body.loginOrEmail, req.body.password );
+		const user = await User.getUserId( req.body.email_or_login, req.body.password );
 
 		//Let's store user id in session
 		req.session.userId = user._id;
 
 		Json.result = true;
 
+		Json.addMessage('Logged in!', 'success');
+
 	} catch ( e ) {
+
 		Json.addMessage( e, 'error' );
 	}
 

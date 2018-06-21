@@ -1,3 +1,5 @@
+const Utility = require( './Utility' );
+
 /**
  * Helper class for validatin stuff
  * */
@@ -17,14 +19,17 @@ class Validator {
 		let messages = [],
 			result   = true;
 
-		for ( let requiredfield of requiredFields ) {
-			if ( typeof data[ requiredfield ] === 'undefined' || data[ requiredfield ] === '' ) {
-				let name    = requiredfield.replace( new RegExp( '_', 'g' ), ' ' ),
+		for ( let field of requiredFields ) {
+			if ( typeof data[ field ] === 'undefined' || data[ field ] === '' ) {
+				let name    = field.replace( new RegExp( '_', 'g' ), ' ' ),
 					message = `${name} is required`;
+
+				message = Utility.capitalize( message );
+
 				messages.push( {
 					message: message,
 					type:    'error',
-					target:  requiredfield
+					target:  field
 				} );
 				result = false;
 			}

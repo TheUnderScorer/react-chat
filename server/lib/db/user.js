@@ -58,20 +58,31 @@ schema.statics.authenticate = async function( emailOrLogin, password, callback )
 
 	const data = EmailValidator.validate( emailOrLogin ) ? { email: emailOrLogin } : { login: emailOrLogin };
 
-	model.findOne( data, ( err, user ) => {
+	let error = false;
+
+	let result = await model.findOne( data, ( err, user ) => {
+
 		if ( err ) {
-			throw err;
+			error = err;
 		} else if ( !user ) {
-			throw 'Invalid e-mail or password';
+			error = 'Invalid e-mail or password';
 		}
 
-		bcrypt.compare( password, user.password, function( err, result ) {
-			if ( result ) {
-				return user;
-			}
-			throw 'Invalid e-mail or password';
-		} );
+		if ( !error ) {
+			bcrypt.compare( password, user.password, function( err, result ) {
+				if ( result ) {
+					return user;
+				}
+				error = 'Invalid e-mail or password';
+			} );
+		}
 	} );
+
+	if ( result ) {
+		return result;
+	}
+
+	throw error;
 
 };
 
@@ -172,11 +183,8 @@ module.exports = {
 	 * */
 	async getUserId( emailOrLogin, password ) {
 
-		try {
-			return await schema.statics.authenticate( emailOrLogin, password );
-		} catch ( e ) {
-			return e;
-		}
+		return await schema.statics.authenticate( emailOrLogin, password );
+
 	}
 
 };

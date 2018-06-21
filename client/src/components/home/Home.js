@@ -33,7 +33,11 @@ class Home extends Component {
 				</Container>
 			)
 		} else {
-			//Chat stuff
+			return (
+				<div>
+					Logged in!!
+				</div>
+			)
 		}
 
 	}

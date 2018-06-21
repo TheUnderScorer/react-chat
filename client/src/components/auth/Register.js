@@ -7,20 +7,9 @@ import Submit from "../form/Submit";
 import FormSection from "../form/FormSection";
 import Messages from "../form/Messages";
 import Loader from '../loader/Loader';
+import Form from '../form/Form';
 
-class Register extends Component {
-
-	constructor() {
-
-		super();
-
-		this.state = {
-			isLoading:     false,
-			messages:      [],
-			result:        false,
-		}
-
-	}
+class Register extends Form {
 
 	handleSubmit( e ) {
 
@@ -31,15 +20,11 @@ class Register extends Component {
 		const Fd = new FormData( e.target );
 
 		Api.post( '/register', Fd ).then( data => {
-
-			console.log( data );
-
 			this.setState( {
 				isLoading:     false,
 				messages:      data.messages,
 				result:        data.result
 			} );
-
 		} )
 
 
