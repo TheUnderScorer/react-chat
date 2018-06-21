@@ -4,8 +4,8 @@ const connection     = require( './connection' ),
 	  EmailValidator = require( 'email-validator' ),
 	  Validator      = require( '../helpers/Validator' ),
 	  JsonResponse   = require( '../helpers/JsonResponse' ),
-	  Utility = require('../helpers/Utility'),
-	  isset = Utility.isset,
+	  Utility        = require( '../helpers/Utility' ),
+	  isset          = Utility.isset,
 	  schema         = new mongoose.Schema( {
 		  email:     {
 			  type:     String,
@@ -83,7 +83,7 @@ module.exports = {
 	 *
 	 * @return {Boolean}
 	 * */
-	isLoggedIn: req => isset(req.session) && isset(req.session.userId),
+	isLoggedIn: req => isset( req.session ) && isset( req.session.userId ),
 
 	/**
 	 * Get user data by his id
@@ -101,7 +101,7 @@ module.exports = {
 	 *
 	 * @param {Object} data
 	 *
-	 * @return {Promise|JsonResponse}
+	 * @return {Promise}
 	 *
 	 * */
 	async register( data = {} ) {
@@ -112,12 +112,8 @@ module.exports = {
 		//Register as user by default
 		data.role = 'user';
 
-		const json = new JsonResponse();
-
-		const messages = [],
-			  result   = false;
-
-		const validation = Validator.validate( [ 'login', 'password', 'email' ], data );
+		let messages   = [],
+			validation = Validator.fields( [ 'login', 'password', 'email' ], data );
 
 		if ( !validation.result ) {
 			messages = validation.messages;
@@ -127,18 +123,20 @@ module.exports = {
 		if ( !EmailValidator.validate( data.email ) ) {
 			messages.push( {
 				message: 'Invalid email format',
-				type:    error
+				type:    'error',
+				target:  'email'
 			} );
 		}
 
 		if ( /[^a-zA-Z0-9\-_]/.test( data.login ) ) {
 			messages.push( {
-				message: 'Invalid email format',
-				type:    error
+				message: 'Special characters are not allowed in login',
+				type:    'error',
+				target:  'email'
 			} );
 		}
 
-		if ( json.error ) {
+		if ( messages.length ) {
 			throw messages;
 		}
 
@@ -146,12 +144,20 @@ module.exports = {
 			const user   = new model( data ),
 				  result = await user.save();
 
+			messages.push( {
+				message: 'Successfuly registered',
+				type:    'success',
+			} );
+
 			return messages;
 		} catch ( e ) {
-
-			throw e.message;
+			let message = e.message;
+			messages.push( {
+				message,
+				type: 'error'
+			} );
+			throw messages;
 		}
-
 
 	},
 

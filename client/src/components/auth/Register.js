@@ -2,6 +2,11 @@ import React, {Component} from 'react';
 import './auth.css';
 import {Link} from 'react-router-dom';
 import Api from '../../helpers/Api';
+import Input from "../form/Input";
+import Submit from "../form/Submit";
+import FormSection from "../form/FormSection";
+import Messages from "../form/Messages";
+import Loader from '../loader/Loader';
 
 class Register extends Component {
 
@@ -10,7 +15,9 @@ class Register extends Component {
 		super();
 
 		this.state = {
-			isSubmit: false,
+			isLoading:     false,
+			messages:      [],
+			result:        false,
 		}
 
 	}
@@ -19,19 +26,19 @@ class Register extends Component {
 
 		e.preventDefault();
 
+		this.setState( { isLoading: true } );
+
 		const Fd = new FormData( e.target );
 
-		this.state.isSubmit = true;
+		Api.post( '/register', Fd ).then( data => {
 
-		Api.post( '/register', {
-			body:        Fd,
-			headers:     { 'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Origin': '*' },
-			mode:        'cors',
-			credentials: 'include'
-		} ).then( data => {
-
-			this.state.isSubmit = false;
 			console.log( data );
+
+			this.setState( {
+				isLoading:     false,
+				messages:      data.messages,
+				result:        data.result
+			} );
 
 		} )
 
@@ -39,23 +46,28 @@ class Register extends Component {
 	}
 
 	render() {
+		let state = this.state;
 		return (
 			<form onSubmit={this.handleSubmit.bind( this )} action="#" method="post" id="register_form" className="form">
-				<div className="form-section">
-					<label htmlFor="login">Login</label>
-					<input type="text" name="login" id="login"/>
-				</div>
-				<div className="form-section">
-					<label htmlFor="email">E-mail</label>
-					<input type="text" name="email" id="email"/>
-				</div>
-				<div className="form-section">
-					<label htmlFor="password">Password</label>
-					<input type="password" name="password" id="password"/>
-				</div>
-				<div className="form-section submit-section">
-					<button type="submit">Register</button>
-				</div>
+
+				{state.isLoading && <Loader/>}
+
+				{/* If there are any errors, map them so that we get an array with only text, no objects */}
+				<Messages messages={state.messages}/>
+				<FormSection>
+					<Input name="login" id="login" label="Login"/>
+				</FormSection>
+				<FormSection>
+					<Input name="email" id="email" label="Email"/>
+				</FormSection>
+				<FormSection>
+					<Input name="password" id="password" label="Password" type="password"/>
+				</FormSection>
+				<FormSection className="submit-section">
+					<Submit>
+						Register
+					</Submit>
+				</FormSection>
 			</form>
 		)
 	}

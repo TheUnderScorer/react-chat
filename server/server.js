@@ -1,12 +1,15 @@
-const Express      = require( 'express' ),
-	  App          = Express(),
-	  Session      = require( 'express-session' ),
-	  MongoStore   = require( 'connect-mongo' )( Session ),
-	  BodyParser   = require( 'body-parser' ),
-	  Connection   = require( './lib/db/connection' ),
-	  User         = require( './lib/db/user' ),
-	  JsonResponse = require( './lib/helpers/JsonResponse' ),
-	  Port         = 5000;
+const Express        = require( 'express' ),
+	  App            = Express(),
+	  Session        = require( 'express-session' ),
+	  MongoStore     = require( 'connect-mongo' )( Session ),
+	  BodyParser     = require( 'body-parser' ),
+	  Connection     = require( './lib/db/connection' ),
+	  User           = require( './lib/db/user' ),
+	  JsonResponse   = require( './lib/helpers/jsonResponse' ),
+	  Validator      = require( './lib/helpers/Validator' ),
+	  Crypto         = require( 'crypto' ),
+	  EmailValidator = require( 'email-validator' ),
+	  Port           = 5000;
 
 //Setup session
 App.use( Session( {
@@ -19,13 +22,34 @@ App.use( Session( {
 } ) );
 
 //Setup body parser
-App.use( BodyParser.json() );
 App.use( BodyParser.urlencoded( {
-	extended: true
+	extended: false
 } ) );
+App.use( BodyParser.json() );
+
+
+App.get( '/api/get-token', async ( req, res ) => {
+
+	const Json = new JsonResponse();
+
+	if ( !req.session.token ) {
+		Crypto.randomBytes( 48, ( err, buffer ) => {
+			let token = buffer.toString( 'hex' );
+
+			Json.result = token;
+			req.session.token = token;
+
+		} );
+	} else {
+		Json.result = req.session.token;
+	}
+
+	return res.json( Json );
+
+} );
 
 //Handle login
-App.post( 'api/login', async ( req, res ) => {
+App.post( '/api/login', async ( req, res ) => {
 
 	const Json = new JsonResponse();
 
@@ -38,7 +62,7 @@ App.post( 'api/login', async ( req, res ) => {
 	}
 
 	if ( Json.error ) {
-		res.json( Json );
+		return res.json( Json );
 	}
 
 	try {
@@ -53,38 +77,47 @@ App.post( 'api/login', async ( req, res ) => {
 		Json.addMessage( e, 'error' );
 	}
 
-	res.json( Json );
+	return res.json( Json );
 
 } );
 
 //Handle register
-App.post( 'api/register', async ( req, res ) => {
+App.post( '/api/register', async ( req, res ) => {
 
 	const Json = new JsonResponse();
 
+	let tokenValidation = Validator.token( req.query.token, req.session.token );
+
+	if ( !tokenValidation.result ) {
+		Json.addMessage( tokenValidation.message, 'error' );
+		return res.json( Json );
+	}
+
 	if ( User.isLoggedIn( req ) ) {
 		Json.addMessage( 'You are already logged in', 'error' );
-		res.json( Json );
+		return res.json( Json );
 	}
+
 
 	try {
-		Json.result = await User.register( req.body );
+		Json.messages = await User.register( req.body );
+		Json.result = true;
 	} catch ( e ) {
-		Json.addMessage( e.message, 'error' )
+		Json.messages = e;
 	}
 
-	res.json( Json );
+	return res.json( Json );
 
 } );
 
 //Check if user is logged
-App.get( '/api/is_logged_in', ( req, res ) => {
+App.get( '/api/is-logged-in', ( req, res ) => {
 
 	const Json = new JsonResponse();
 
-	Json.result = User.isLoggedIn(req);
+	Json.result = User.isLoggedIn( req );
 
-	res.json( Json );
+	return res.json( Json );
 
 } );
 

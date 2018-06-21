@@ -12,18 +12,19 @@ class Validator {
 	 * @return {Object} Validation result
 	 *
 	 * */
-	static validate( requiredFields = [], data = {} ) {
+	static fields( requiredFields = [], data = {} ) {
 
 		let messages = [],
 			result   = true;
 
 		for ( let requiredfield of requiredFields ) {
 			if ( typeof data[ requiredfield ] === 'undefined' || data[ requiredfield ] === '' ) {
-				let name    = requiredfield.capitalize().replace( new RegExp( '_', 'g' ), ' ' ),
+				let name    = requiredfield.replace( new RegExp( '_', 'g' ), ' ' ),
 					message = `${name} is required`;
 				messages.push( {
 					message: message,
-					type:    'error'
+					type:    'error',
+					target:  requiredfield
 				} );
 				result = false;
 			}
@@ -35,6 +36,38 @@ class Validator {
 		};
 
 	}
+
+	/**
+	 * Perform token validation
+	 *
+	 * @param {String} token Provided t oken
+	 * @param {String} sessionToken
+	 *
+	 * @return {Object} Validation result
+	 *
+	 * */
+	static token( token, sessionToken ) {
+
+		let result = false,
+			message;
+
+		if ( !token ) {
+			message = 'No token provided';
+		}
+
+		if ( token !== sessionToken ) {
+			message = 'Token mismatch';
+		}
+
+		//No errors
+		if ( !message ) {
+			result = true;
+		}
+
+		return { result, message }
+
+	}
+
 
 }
 

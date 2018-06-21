@@ -1,0 +1,23 @@
+@import '../../../assets/css/variables';
+
+.form-section {
+	display: flex;
+	padding: 10px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	label{
+		font-size: 16px;
+		margin-bottom: 5px;
+	}
+	input{
+		padding: 10px;
+		box-sizing: border-box;
+		outline: none;
+		border: none;
+		border-bottom: 1px solid #4a4a4a;
+		&:focus{
+			border-color: $blue;
+		}
+	}
+}
