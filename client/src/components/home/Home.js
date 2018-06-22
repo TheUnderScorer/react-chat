@@ -14,6 +14,7 @@ class Home extends Component {
 		this.state = {
 			isLoggedIn: null,
 			isLoading:  true,
+			user:       {}
 		}
 
 	}
@@ -21,11 +22,24 @@ class Home extends Component {
 	componentDidMount() {
 
 		this.setState( { isLoading: true } );
+
 		Api.isLoggedIn().then( data => {
 			this.setState( {
 				isLoggedIn: data.result,
 				isLoading:  false,
-			} )
+			} );
+
+			if ( data.result ) {
+
+				this.setState( { isLoading: true });
+				Api.getCurrentUser().then( data => {
+					this.setState( {
+						user:      data.result,
+						isLoading: false,
+					} );
+				} );
+
+			}
 		} )
 
 	}
@@ -33,6 +47,8 @@ class Home extends Component {
 	render() {
 
 		let state = this.state;
+
+		console.log( state );
 
 		if ( state.isLoading ) {
 			return <Loader/>

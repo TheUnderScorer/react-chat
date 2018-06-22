@@ -150,3 +150,36 @@ App.get( '/api/is-logged-in', ( req, res ) => {
 	return res.json( Json );
 
 } );
+
+App.get( '/api/get-logged-user', async ( req, res ) => {
+
+	const Json = new JsonResponse();
+
+	let tokenValidation = Validator.token( req.query.token, req.session.token );
+
+	if ( !tokenValidation.result ) {
+		Json.addMessage( tokenValidation.message, 'error' );
+		return res.json( Json );
+	}
+
+	if ( !req.session.userId ) {
+		Json.addMessage( 'You are not logged in.', 'error' );
+		return res.json( Json );
+	}
+
+	try {
+
+		let user = await User.getUser( req.session.userId );
+
+		//Don't send hashed password in response
+		user.password = '';
+
+		Json.result = user;
+
+	} catch ( e ) {
+		Json.addMessage( 'Error while fetching user', 'error' );
+	}
+
+	return res.json( Json );
+
+} );

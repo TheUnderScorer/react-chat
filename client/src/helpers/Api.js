@@ -90,10 +90,12 @@ class Api {
 	 *
 	 * @return {Promise}
 	 * */
-	static isLoggedIn() {
+	static async isLoggedIn() {
+		return await Api.get( '/is-logged-in' );
+	}
 
-		return Api.get( '/is-logged-in' );
-
+	static async getCurrentUser() {
+		return await Api.get( '/get-logged-user' );
 	}
 
 	/**
