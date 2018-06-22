@@ -5,10 +5,15 @@
  *
  * */
 
+//Load app
+require( './lib/app' );
+
+//Load server
+require( './lib/web/http' );
+
 //Load routes
 require( './lib/web/routes' );
 
-const App  = require( './lib/app' ),
-	  Port = 5000;
+//Load chat socket
+require( './lib/web/chat' );
 
-App.listen( Port );

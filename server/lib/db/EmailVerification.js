@@ -5,36 +5,45 @@
  *
  * */
 
-const Connection = require( './connection' ),
-	  Mongoose   = require( 'mongoose' ),
-	  Bcrypt     = require( 'bcrypt' ),
-	  Mailer     = require( '../web/mailer' ),
-	  Schema     = new Mongoose.Schema( {
-		  user:    {
-			  type: Mongoose.Schema.ObjectId,
-			  ref:  'user'
-		  },
-		  email:   {
-			  type:     String,
-			  unique:   true,
-			  required: true,
-			  trim:     true,
-		  },
-		  token:   {
-			  type:     String,
-			  unique:   true,
-			  required: true,
-			  trim:     true
-		  },
-		  expires: {
-			  type:     Date,
-			  required: true
-		  }
+const Mongoose       = require( 'mongoose' ),
+	  CollectionItem = require( './CollectionItem' ),
+	  Bcrypt         = require( 'bcrypt' ),
+	  Mailer         = require( '../web/mailer' );
 
-	  } ),
-	  Model      = Connection.model( 'email-verification', Schema );
+class EmailVerification extends CollectionItem {
 
-module.exports = {
+	constructor() {
+
+		super();
+
+		this.schema = {
+			user:    {
+				type: Mongoose.Schema.ObjectId,
+				ref:  'user'
+			},
+			email:   {
+				type:     String,
+				unique:   true,
+				required: true,
+				trim:     true,
+			},
+			token:   {
+				type:     String,
+				unique:   true,
+				required: true,
+				trim:     true
+			},
+			expires: {
+				type:     Date,
+				required: true
+			}
+
+		};
+		this.name = 'email-verification';
+
+		this.create();
+
+	}
 
 	/**
 	 * Send validate e-mail
@@ -58,7 +67,7 @@ module.exports = {
 			let token   = Bcrypt.hashSync( today + random, 10 ),
 				url     = require( '../settings' ).url,
 				message = `<p>To validate your e-mail <a href="${url}?token=${token}">click here.</a></p>`,
-				model   = new Model( {
+				model   = new this.model( {
 					email:   email,
 					token:   token,
 					user:    _id,
@@ -79,4 +88,6 @@ module.exports = {
 
 	}
 
-};
+}
+
+module.exports = new EmailVerification();

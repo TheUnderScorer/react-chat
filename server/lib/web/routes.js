@@ -45,7 +45,7 @@ App.post( '/api/login', async ( req, res ) => {
 	}
 
 	try {
-		let user = await User.getUserId( req.body.email_or_login, req.body.password );
+		let user = await User.authenticate( req.body.email_or_login, req.body.password );
 
 		//Let's store user id in session
 		req.session.userId = user._id;
