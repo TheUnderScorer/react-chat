@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAEA,aAAc;EACb,OAAO,EAAE,IAAI;EACb,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,MAAM;EACtB,eAAe,EAAE,MAAM;EACvB,WAAW,EAAE,MAAM;EACnB,mBAAK;IACJ,SAAS,EAAE,IAAI;IACf,aAAa,EAAE,GAAG;EAEnB,mBAAK;IACJ,OAAO,EAAE,IAAI;IACb,UAAU,EAAE,UAAU;IACtB,OAAO,EAAE,IAAI;IACb,MAAM,EAAE,IAAI;IACZ,aAAa,EAAE,iBAAiB;IAChC,yBAAO;MACN,YAAY,ECjBP,OAAO",
+"sources": ["form-section.scss","../../../assets/css/variables.scss"],
+"names": [],
+"file": "form-section.css"
+}

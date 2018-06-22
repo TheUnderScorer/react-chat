@@ -20,6 +20,8 @@ class Login extends Form {
 		const Fd = new FormData( e.target );
 
 		Api.post( '/login', Fd ).then( data => {
+
+			console.log( data );
 			this.setState( {
 				isLoading: false,
 				messages:  data.messages,
@@ -27,7 +29,7 @@ class Login extends Form {
 			} );
 
 			if ( data.result ) {
-				setTimeout( () => window.location.reload(), 1000 );
+				setTimeout( () => window.location.reload(), 500 );
 			}
 
 		} )
@@ -42,6 +44,7 @@ class Login extends Form {
 				{state.isLoading && <Loader/>}
 
 				<Messages messages={state.messages}/>
+
 				<FormSection>
 					<Input name="email_or_login" id="email_or_login" label="E-mail or login"/>
 				</FormSection>
@@ -54,8 +57,8 @@ class Login extends Form {
 					</Submit>
 				</FormSection>
 				<div className="links">
-					<Link to="/register">Register now!</Link>
-					<a href="/forgot_password">Forgot password?</a>
+					<Link to="/register">Register now</Link>
+					<Link to="/forgot-password">Forgot password</Link>
 				</div>
 			</form>
 		)

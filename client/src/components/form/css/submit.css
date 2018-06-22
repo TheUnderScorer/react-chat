@@ -1,0 +1,11 @@
+.submit-section [type=submit] {
+  background: #3233c0;
+  cursor: pointer;
+  color: #ffffff;
+  border: none;
+  padding: 20px;
+  font-size: 17px;
+  border-radius: 5px;
+  width: 150px; }
+
+/*# sourceMappingURL=submit.css.map */
