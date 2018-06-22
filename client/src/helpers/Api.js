@@ -1,4 +1,5 @@
 import ApiResponse from './ApiResponse';
+import Utility from './Utility';
 
 /**
  * Helper class for managing api connections
@@ -15,10 +16,9 @@ class Api {
 	 *
 	 * @return void
 	 * */
-	static getToken() {
+	static async getToken() {
 
-		Api.get( '/get-token' ).then( data => {
-			console.log( data );
+		await Api.get( '/get-token' ).then( data => {
 			Api.token = data.result
 		} ).catch( e => console.error( e ) );
 
@@ -64,13 +64,20 @@ class Api {
 	/**
 	 * Perform get request to api
 	 *
+	 * @param {String} url
+	 * @param {Object} query
+	 *
 	 * @return {Promise}
 	 * */
-	static async get( url, opts = {} ) {
+	static async get( url, query = {} ) {
 
-		opts.credentials = 'include';
+		query.credentials = 'include';
 
-		let result = await fetch( `/${Api.endpoint}${url}`, opts ),
+		query.token = Api.token;
+
+		let result = await fetch( Utility.buildQuery( `/${Api.endpoint}${url}`, query ), {
+				credentials: 'include'
+			} ),
 			json   = await result.json();
 
 

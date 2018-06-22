@@ -5,11 +5,15 @@ import './assets/css/general.css';
 import Routes from "./components/Routes";
 import Api from './helpers/Api';
 
-Api.getToken();
+Api.getToken().then( () => {
 
-ReactDOM.render( (
-	<Router>
-		<Routes/>
-	</Router>
-), document.getElementById( 'root' ) );
+	ReactDOM.render( (
+		<Router>
+			<Routes/>
+		</Router>
+	), document.getElementById( 'root' ) );
+
+} );
+
+
 

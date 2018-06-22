@@ -9,11 +9,20 @@ const App          = require( '../app' ),
 	  User         = require( '../db/user' ),
 	  JsonResponse = require( '../helpers/jsonResponse' ),
 	  Validator    = require( '../helpers/Validator' ),
-	  Crypto       = require( 'crypto' );
+	  Crypto       = require( 'crypto' ),
+	  Hosts        = [ 'http://localhost:5000' ];
 
 App.get( '/api/get-token', async ( req, res ) => {
 
 	const Json = new JsonResponse();
+
+	let host = req.protocol + '://' + req.get( 'host' );
+
+	//Request from unknown host
+	if ( !Hosts.find( item => item === host ) ) {
+		Json.addMessage( 'Unknown host', 'error' );
+		return res.json( Json );
+	}
 
 	if ( !req.session.token ) {
 		let token = Crypto.randomBytes( 48 ).toString( 'hex' );
@@ -31,6 +40,13 @@ App.get( '/api/get-token', async ( req, res ) => {
 App.post( '/api/login', async ( req, res ) => {
 
 	const Json = new JsonResponse();
+
+	let tokenValidation = Validator.token( req.query.token, req.session.token );
+
+	if ( !tokenValidation.result ) {
+		Json.addMessage( tokenValidation.message, 'error' );
+		return res.json( Json );
+	}
 
 	if ( !req.body.email_or_login ) {
 		Json.addMessage( 'Login or email are required.', 'error' );
@@ -66,6 +82,13 @@ App.post( '/api/login', async ( req, res ) => {
 App.get( '/api/logout', ( req, res ) => {
 
 	const Json = new JsonResponse();
+
+	let tokenValidation = Validator.token( req.query.token, req.session.token );
+
+	if ( !tokenValidation.result ) {
+		Json.addMessage( tokenValidation.message, 'error' );
+		return res.json( Json );
+	}
 
 	if ( req.session ) {
 		//Destroy session
@@ -114,6 +137,13 @@ App.post( '/api/register', async ( req, res ) => {
 App.get( '/api/is-logged-in', ( req, res ) => {
 
 	const Json = new JsonResponse();
+
+	let tokenValidation = Validator.token( req.query.token, req.session.token );
+
+	if ( !tokenValidation.result ) {
+		Json.addMessage( tokenValidation.message, 'error' );
+		return res.json( Json );
+	}
 
 	Json.result = User.isLoggedIn( req );
 
