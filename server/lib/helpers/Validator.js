@@ -45,7 +45,7 @@ class Validator {
 	/**
 	 * Perform token validation
 	 *
-	 * @param {String} token Provided t oken
+	 * @param {String} token Provided token
 	 * @param {String} sessionToken
 	 *
 	 * @return {Object} Validation result

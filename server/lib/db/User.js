@@ -96,11 +96,12 @@ class User extends CollectionItem {
 	 * Get user data by his id
 	 *
 	 * @param {int} userId
+	 * @param {String|Object} fields Fields to retrieve
 	 *
 	 * @return {Promise}
 	 * */
-	async getUser( userId ) {
-		return await this.model.findOne( { _id: userId } );
+	async getUser( userId, fields = 'login email role verified avatarUrl' ) {
+		return await this.model.findById( { _id: userId }, fields );
 	}
 
 	/**
