@@ -1,12 +1,13 @@
 /**
- * Handles register endpoint
+ * Handles get-chats endpoint
  *
- * @file register.js
+ * @file get-chats.js
  *
  * */
 
 const JsonResponse = require( '../../helpers/jsonResponse' ),
 	  User         = require( '../../db/user' ),
+	  Chat         = require( '../../db/Chat' ),
 	  Validator    = require( '../../helpers/Validator' );
 
 module.exports = async ( req, res ) => {
@@ -20,17 +21,16 @@ module.exports = async ( req, res ) => {
 		return res.json( Json );
 	}
 
-	if ( User.isLoggedIn( req ) ) {
-		Json.addMessage( 'You are already logged in', 'error' );
+	if ( !User.isLoggedIn( req ) ) {
+		Json.addMessage( 'You must be logged in to do that', 'error' );
 		return res.json( Json );
 	}
 
-
 	try {
-		Json.messages = await User.register( req.body );
-		Json.result = true;
+		Json.result = Chat.getUserChats( req.session.userId );
 	} catch ( e ) {
-		Json.messages = e;
+		console.error( e );
+		Json.addMessage( 'Error while fetching chats', 'error' );
 	}
 
 	return res.json( Json );

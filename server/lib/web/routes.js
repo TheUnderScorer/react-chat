@@ -24,3 +24,8 @@ App.get( '/api/is-logged-in', require( './controllers/is-logged-in' ) );
 
 //Get logged user object
 App.get( '/api/get-logged-user', require( './controllers/get-logged-user' ) );
+
+//Handle creating new chat
+App.post( '/api/create-chat', require( './controllers/create-chat' ) );
+
+App.get( '/api/get-chats', require( './controllers/get-chats' ) );

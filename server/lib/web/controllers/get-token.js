@@ -6,7 +6,8 @@
  *
  * */
 
-const JsonResponse = require( '../../helpers/jsonResponse' );
+const JsonResponse = require( '../../helpers/jsonResponse' ),
+	  Crypto       = require( 'crypto' );
 
 module.exports = async ( req, res ) => {
 
@@ -15,7 +16,7 @@ module.exports = async ( req, res ) => {
 	let host = req.protocol + '://' + req.get( 'host' );
 
 	//Request from unknown host
-	if ( !require('../hosts').find( item => item === host ) ) {
+	if ( !require( '../hosts' ).find( item => item === host ) ) {
 		Json.addMessage( 'Unknown host', 'error' );
 		return res.json( Json );
 	}

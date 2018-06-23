@@ -152,7 +152,7 @@ class User extends CollectionItem {
 			const user   = new this.model( data ),
 				  result = await user.save();
 
-			EmailVerification.sendValidationEmail( result );
+			//EmailVerification.sendValidationEmail( result );
 
 			messages.push( {
 				message: 'Successfuly registered. Check your e-mail for validation mail.',
