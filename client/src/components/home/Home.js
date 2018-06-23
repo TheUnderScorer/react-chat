@@ -21,6 +21,7 @@ class Home extends Component {
 
 	componentDidMount() {
 
+		//We always set this state before performin fetch call to display loader
 		this.setState( { isLoading: true } );
 
 		Api.isLoggedIn().then( data => {
@@ -31,7 +32,7 @@ class Home extends Component {
 
 			if ( data.result ) {
 
-				this.setState( { isLoading: true });
+				this.setState( { isLoading: true } );
 				Api.getCurrentUser().then( data => {
 					this.setState( {
 						user:      data.result,
@@ -48,8 +49,6 @@ class Home extends Component {
 
 		let state = this.state;
 
-		console.log( state );
-
 		if ( state.isLoading ) {
 			return <Loader/>
 		}
@@ -62,9 +61,12 @@ class Home extends Component {
 			)
 		} else {
 			return (
-				<div>
-					Logged in!!
-				</div>
+				<main>
+					<Header {...state.user}/>
+					<Container className="home">
+						Hello, {state.user.login}
+					</Container>
+				</main>
 			)
 		}
 

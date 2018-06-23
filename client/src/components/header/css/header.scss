@@ -1,0 +1,9 @@
+@import '../../../assets/css/variables';
+
+.header{
+	background: $grey;
+	padding: 20px;
+	color: $white;
+	display: flex;
+	justify-content: space-between;
+}
