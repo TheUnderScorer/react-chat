@@ -1,4 +1,7 @@
-html, body, #root, .root-inner {
+body {
+  font-family: 'Roboto'; }
+
+html, body, #root, .root-inner, .fixed-height {
   height: 100%; }
 
 .centered-container main {
@@ -86,37 +89,28 @@ body {
     margin-top: 50px; }
 
 /*Round icon*/
-.has-round-icon {
+.has-round-button {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   text-decoration: none; }
-  .has-round-icon svg {
-    border: 1px solid #3233c0;
-    border-radius: 50%;
-    font-size: 60px;
-    display: block;
+  .has-round-button button {
+    box-shadow: none;
+    margin-bottom: 10px;
+    background: #ffffff;
     color: #000000;
-    transition: all .3s;
-    margin-bottom: 10px; }
-    .has-round-icon svg:hover {
-      background: #3233c0;
+    border: 1px solid #000000; }
+    .has-round-button button:hover {
       color: #ffffff; }
-    .has-round-icon svg + span, .has-round-icon svg + a {
-      color: #000000; }
 
 /*Buttons*/
-.button {
-  background: #3233c0;
-  cursor: pointer;
-  font-size: 17px;
-  width: 150px;
-  text-decoration: none;
-  background: #ffffff;
-  color: #4d394b;
-  border: 1px solid #4d394b;
-  padding: 10px;
-  text-align: center; }
+.floating-button {
+  position: fixed !important;
+  right: 20px;
+  bottom: 20px; }
+  .floating-button a {
+    color: #ffffff;
+    display: flex; }
 
 /*# sourceMappingURL=general.css.map */

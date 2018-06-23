@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAGC,6BAAc;EACb,UAAU,ECFJ,OAAO;EDGb,MAAM,EAAE,OAAO;EACf,KAAK,ECLE,OAAO;EDMd,MAAM,EAAE,IAAI;EACZ,OAAO,EAAE,IAAI;EACb,SAAS,EAAE,IAAI;EACf,aAAa,EAAE,GAAG;EAClB,KAAK,EAAE,KAAK",
+"mappings": "AAGC,6BAAc;EACb,UAAU,ECCA,OAAO;EDAjB,KAAK,ECLE,OAAO;EDMd,mCAAO;IACN,UAAU,ECLL,OAAO;IDMZ,KAAK,ECPC,OAAO",
 "sources": ["submit.scss","../../../assets/css/variables.scss"],
 "names": [],
 "file": "submit.css"

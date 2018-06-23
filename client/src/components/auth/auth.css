@@ -19,8 +19,7 @@
   .links > a:not(:last-of-type)::after {
     content: '|';
     position: relative;
-    left: 2px;
-    margin: 0 3px; }
+    margin: 0 7px; }
   .links > a:hover {
     text-decoration: underline; }
 

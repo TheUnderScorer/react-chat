@@ -1,11 +1,8 @@
 .submit-section [type=submit] {
-  background: #3233c0;
-  cursor: pointer;
-  color: #ffffff;
-  border: none;
-  padding: 20px;
-  font-size: 17px;
-  border-radius: 5px;
-  width: 150px; }
+  background: #f0eaef;
+  color: #000000; }
+  .submit-section [type=submit]:hover {
+    background: #3233c0;
+    color: #ffffff; }
 
 /*# sourceMappingURL=submit.css.map */

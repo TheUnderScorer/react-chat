@@ -5,9 +5,12 @@ import Container from '../Container';
 import Header from "../header/Header";
 import Loader from "../loader/Loader";
 import PageBox from "../page-box/PageBox";
+import Button from '@material-ui/core/Button/Button';
+import AddIcon from '@material-ui/icons/Add';
+import ChatsList from "../chat/ChatsList";
+import {Link} from 'react-router-dom';
 
 import './home.css';
-import ChatsList from "../chat/ChatsList";
 
 class Home extends Component {
 
@@ -72,14 +75,19 @@ class Home extends Component {
 			)
 		} else {
 			return (
-				<main>
+				<div className="fixed-height">
 					<Header {...state.user}/>
 					<Container className="home">
 						<PageBox>
 							<ChatsList chats={state.chats}/>
 						</PageBox>
 					</Container>
-				</main>
+					<Button className="floating-button" variant="fab" color="primary" aria-label="add">
+						<Link to="/create-chat">
+							<AddIcon/>
+						</Link>
+					</Button>
+				</div>
 			)
 		}
 

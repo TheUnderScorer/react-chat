@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-
-import Add from 'react-icons/lib/md/add';
+import AddIcon from '@material-ui/icons/Add';
+import Button from '@material-ui/core/Button/Button';
 
 class ChatsList extends Component {
 
@@ -20,8 +20,8 @@ class ChatsList extends Component {
 
 		if ( !props.chats.length ) {
 			return (
-				<Link className="has-round-icon" to="/create-chat">
-					<Add />
+				<Link className="has-round-button" to="/create-chat">
+					<Button variant="fab" color="primary" aria-label="add"><AddIcon /></Button>
 					<span>Create your first chat ;)</span>
 				</Link>
 			)

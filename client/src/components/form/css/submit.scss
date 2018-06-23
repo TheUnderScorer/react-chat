@@ -2,13 +2,12 @@
 
 .submit-section {
 	[type=submit] {
-		background: $blue;
-		cursor: pointer;
-		color: $white;
-		border: none;
-		padding: 20px;
-		font-size: 17px;
-		border-radius: 5px;
-		width: 150px;
+		background: $lightGrey;
+		color: $black;
+		&:hover{
+			background: $blue;
+			color: $white;
+		}
+
 	}
 }

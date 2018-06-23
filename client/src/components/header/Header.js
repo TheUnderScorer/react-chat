@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import './css/header.css';
 import Avatar from "./Avatar";
 import Api from "../../helpers/Api";
 import {Redirect, Link} from 'react-router-dom';
 import Loader from "../loader/Loader";
+
+import './css/header.css';
 
 class Header extends Component {
 
