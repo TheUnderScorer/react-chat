@@ -5,8 +5,13 @@
  *
  * */
 
-const mongoose = require( 'mongoose' );
+const Mongoose = require( 'mongoose' ),
+	  Settings = require( '../settings' );
 
-mongoose.connect( 'mongodb://127.0.0.1:27017/' );
+Mongoose.connect( Settings.db.host, ( err ) => {
+	if ( err ) {
+		process.exit();
+	}
+} );
 
-module.exports = mongoose.connection;
+module.exports = Mongoose.connection;
