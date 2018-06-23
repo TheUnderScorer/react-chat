@@ -5,181 +5,22 @@
  *
  * */
 
-const App          = require( '../app' ),
-	  User         = require( '../db/user' ),
-	  JsonResponse = require( '../helpers/jsonResponse' ),
-	  Validator    = require( '../helpers/Validator' ),
-	  Crypto       = require( 'crypto' ),
-	  Hosts        = [ 'http://localhost:5000' ];
+const App = require( '../app' );
 
-App.get( '/api/get-token', async ( req, res ) => {
-
-	const Json = new JsonResponse();
-
-	let host = req.protocol + '://' + req.get( 'host' );
-
-	//Request from unknown host
-	if ( !Hosts.find( item => item === host ) ) {
-		Json.addMessage( 'Unknown host', 'error' );
-		return res.json( Json );
-	}
-
-	if ( !req.session.token ) {
-		let token = Crypto.randomBytes( 48 ).toString( 'hex' );
-		req.session.token = token;
-		Json.result = token
-	} else {
-		Json.result = req.session.token;
-	}
-
-	return res.json( Json );
-
-} );
+//Get api token
+App.get( '/api/get-token', require( './controllers/get-token' ) );
 
 //Handle login
-App.post( '/api/login', async ( req, res ) => {
-
-	const Json = new JsonResponse();
-
-	let tokenValidation = Validator.token( req.query.token, req.session.token );
-
-	if ( !tokenValidation.result ) {
-		Json.addMessage( tokenValidation.message, 'error' );
-		return res.json( Json );
-	}
-
-	if ( !req.body.email_or_login ) {
-		Json.addMessage( 'Login or email are required.', 'error' );
-	}
-
-	if ( !req.body.password ) {
-		Json.addMessage( 'Password is required.', 'error' )
-	}
-
-	if ( Json.error ) {
-		return res.json( Json );
-	}
-
-	try {
-		let user = await User.authenticate( req.body.email_or_login, req.body.password );
-
-		//Let's store user id in session
-		req.session.userId = user._id;
-
-		Json.result = true;
-
-		Json.addMessage( 'Logged in!', 'success' );
-
-	} catch ( e ) {
-		Json.addMessage( e, 'error' );
-	}
-
-	return res.json( Json );
-
-} );
+App.post( '/api/login', require( './controllers/login' ) );
 
 //Handle logout
-App.get( '/api/logout', ( req, res ) => {
-
-	const Json = new JsonResponse();
-
-	let tokenValidation = Validator.token( req.query.token, req.session.token );
-
-	if ( !tokenValidation.result ) {
-		Json.addMessage( tokenValidation.message, 'error' );
-		return res.json( Json );
-	}
-
-	if ( req.session ) {
-		//Destroy session
-		return req.session.destroy( ( err ) => {
-			if ( err ) {
-				Json.addMessage( err, 'error' );
-			} else {
-				Json.addMessage( 'Logged out', 'success' );
-				Json.result = true;
-			}
-			return res.json( Json );
-		} );
-	}
-} );
+App.get( '/api/logout', require( './controllers/logout' ) );
 
 //Handle register
-App.post( '/api/register', async ( req, res ) => {
-
-	const Json = new JsonResponse();
-
-	let tokenValidation = Validator.token( req.query.token, req.session.token );
-
-	if ( !tokenValidation.result ) {
-		Json.addMessage( tokenValidation.message, 'error' );
-		return res.json( Json );
-	}
-
-	if ( User.isLoggedIn( req ) ) {
-		Json.addMessage( 'You are already logged in', 'error' );
-		return res.json( Json );
-	}
-
-
-	try {
-		Json.messages = await User.register( req.body );
-		Json.result = true;
-	} catch ( e ) {
-		Json.messages = e;
-	}
-
-	return res.json( Json );
-
-} );
+App.post( '/api/register', require( './controllers/register' ) );
 
 //Check if user is logged
-App.get( '/api/is-logged-in', ( req, res ) => {
+App.get( '/api/is-logged-in', require( './controllers/is-logged-in' ) );
 
-	const Json = new JsonResponse();
-
-	let tokenValidation = Validator.token( req.query.token, req.session.token );
-
-	if ( !tokenValidation.result ) {
-		Json.addMessage( tokenValidation.message, 'error' );
-		return res.json( Json );
-	}
-
-	Json.result = User.isLoggedIn( req );
-
-	return res.json( Json );
-
-} );
-
-App.get( '/api/get-logged-user', async ( req, res ) => {
-
-	const Json = new JsonResponse();
-
-	let tokenValidation = Validator.token( req.query.token, req.session.token );
-
-	if ( !tokenValidation.result ) {
-		Json.addMessage( tokenValidation.message, 'error' );
-		return res.json( Json );
-	}
-
-	if ( !req.session.userId ) {
-		Json.addMessage( 'You are not logged in.', 'error' );
-		return res.json( Json );
-	}
-
-	try {
-
-		let user = await User.getUser( req.session.userId );
-
-		//Don't send hashed password in response
-		user.password = '';
-
-		Json.result = user;
-
-	} catch ( e ) {
-		Json.addMessage( 'Error while fetching user', 'error' );
-	}
-
-	return res.json( Json );
-
-} );
+//Get logged user object
+App.get( '/api/get-logged-user', require( './controllers/get-logged-user' ) );
