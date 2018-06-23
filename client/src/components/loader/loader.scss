@@ -29,6 +29,9 @@
 	justify-content: center;
 	background: rgba(255, 255, 255, 0.5);
 	z-index: 9999;
+	margin: 0;
+	left: 0;
+	top: 0;
 	&.input-loader{
 		justify-content: flex-end;
 	}

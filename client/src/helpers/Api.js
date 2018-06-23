@@ -98,6 +98,10 @@ class Api {
 		return await Api.get( '/get-logged-user' );
 	}
 
+	static async getUserChats(){
+		return await Api.get('/get-chats');
+	}
+
 	/**
 	 * Convert form data to json format
 	 *

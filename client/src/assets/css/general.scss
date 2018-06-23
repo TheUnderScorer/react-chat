@@ -1,7 +1,7 @@
-
 @import 'variables';
+@import 'mixins';
 
-html, body, #root, .root-inner{
+html, body, #root, .root-inner {
 	height: 100%;
 }
 
@@ -73,10 +73,6 @@ body {
 .has-submenu {
 	position: relative;
 	.submenu {
-		webkit-transition: all .3s;
-		-moz-transition: all .3s;
-		-ms-transition: all .3s;
-		-o-transition: all .3s;
 		transition: all .3s;
 		opacity: 0;
 		visibility: hidden;
@@ -84,26 +80,62 @@ body {
 		background: white;
 		display: flex;
 		flex-direction: column;
-		margin-top: 100px;
+		margin-top: 20px;
 		right: 1px;
 		min-width: 200px;
 		padding: 20px;
+		top: 0;
+		color: $black;
+		z-index: 90;
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-		li{
+		li {
+			padding: 10px;
 			list-style: none;
+			cursor: pointer;
+			&:hover {
+				background: $lightGrey;
+			}
 		}
 	}
 
-	&:hover{
-		.submenu{
+	&:hover {
+		.submenu {
 			opacity: 1;
 			visibility: visible;
-			margin-top: 110px;
+			margin-top: 50px;
 		}
 	}
 }
 
-.button{
+/*Round icon*/
+
+.has-round-icon {
+	@include center();
+	flex-direction: column;
+	text-decoration: none;
+	svg {
+		border: 1px solid $blue;
+		border-radius: 50%;
+		font-size: 60px;
+		display: block;
+		color: $black;
+		transition: all .3s;
+		margin-bottom: 10px;
+
+		&:hover {
+			background: $blue;
+			color: $white;
+		}
+
+		& + span, & + a {
+			color: $black;
+		}
+	}
+}
+
+/*Buttons*/
+
+.button {
 	background: $blue;
 	cursor: pointer;
 	font-size: 17px;

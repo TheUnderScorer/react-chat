@@ -4,6 +4,10 @@ import Login from '../auth/Login';
 import Container from '../Container';
 import Header from "../header/Header";
 import Loader from "../loader/Loader";
+import PageBox from "../page-box/PageBox";
+
+import './home.css';
+import ChatsList from "../chat/ChatsList";
 
 class Home extends Component {
 
@@ -14,7 +18,8 @@ class Home extends Component {
 		this.state = {
 			isLoggedIn: null,
 			isLoading:  true,
-			user:       {}
+			user:       {},
+			chats:      {},
 		}
 
 	}
@@ -35,10 +40,16 @@ class Home extends Component {
 				this.setState( { isLoading: true } );
 				Api.getCurrentUser().then( data => {
 					this.setState( {
-						user:      data.result,
-						isLoading: false,
+						user: data.result,
 					} );
 				} );
+
+				Api.getUserChats().then( data => {
+					this.setState( {
+						isLoading: false,
+						chats:     data.result
+					} );
+				} )
 
 			}
 		} )
@@ -64,7 +75,9 @@ class Home extends Component {
 				<main>
 					<Header {...state.user}/>
 					<Container className="home">
-						Hello, {state.user.login}
+						<PageBox>
+							<ChatsList chats={state.chats}/>
+						</PageBox>
 					</Container>
 				</main>
 			)

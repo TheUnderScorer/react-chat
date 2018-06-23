@@ -4,5 +4,8 @@
   color: #ffffff;
   display: flex;
   justify-content: space-between; }
+  .header a {
+    text-decoration: none;
+    color: #000000; }
 
 /*# sourceMappingURL=header.css.map */
