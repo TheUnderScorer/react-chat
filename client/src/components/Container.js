@@ -4,16 +4,26 @@ import PropTypes from 'prop-types';
 class Container extends Component {
 
 	static defaultProps = {
-		className: ''
+		className: '',
+		centered: true,
 	};
 
 	static propTypes = {
-		className: PropTypes.string
+		className: PropTypes.string,
+		centered: PropTypes.bool
 	};
 
 	render() {
+
+		let props = this.props,
+			classes = props.className;
+
+		if(props.centered){
+			classes += ' centered';
+		}
+
 		return (
-			<div className={'container ' + this.props.className}>{this.props.children}</div>
+			<div className={'container ' + classes}>{this.props.children}</div>
 		)
 	}
 
