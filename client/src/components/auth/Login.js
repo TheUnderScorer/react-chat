@@ -41,25 +41,29 @@ class Login extends Form {
 		return (
 			<form onSubmit={this.handleSubmit.bind( this )} action="/login" method="post" id="login_form" className="form page-box">
 
-				{state.isLoading && <Loader/>}
+				<Loader visible={state.isLoading}/>
 
 				<Messages messages={state.messages}/>
 
 				<FormSection>
 					<Input name="email_or_login" id="email_or_login" label="E-mail or login"/>
 				</FormSection>
+
 				<FormSection>
 					<Input name="password" id="password" label="Password" type="password"/>
 				</FormSection>
+
 				<FormSection className="submit-section">
 					<Submit>
 						Login
 					</Submit>
 				</FormSection>
+
 				<div className="links">
 					<Link to="/register">Register now</Link>
 					<Link to="/forgot-password">Forgot password</Link>
 				</div>
+
 			</form>
 		)
 	}

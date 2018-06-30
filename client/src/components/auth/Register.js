@@ -34,7 +34,7 @@ class Register extends Form {
 		return (
 			<form onSubmit={this.handleSubmit.bind( this )} action="#" method="post" id="register_form" className="form">
 
-				{state.isLoading && <Loader/>}
+				<Loader visible={state.isLoading}/>
 
 				<Messages messages={state.messages}/>
 				<FormSection>

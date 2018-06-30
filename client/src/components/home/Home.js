@@ -63,10 +63,6 @@ class Home extends Component {
 
 		let state = this.state;
 
-		if ( state.isLoading ) {
-			return <Loader/>
-		}
-
 		if ( !state.isLoggedIn ) {
 			return (
 				<Container className='login'>
@@ -79,6 +75,7 @@ class Home extends Component {
 					<Header {...state.user}/>
 					<Container className="home">
 						<PageBox>
+							<Loader visible={state.isLoading}/>
 							<ChatsList chats={state.chats}/>
 						</PageBox>
 					</Container>

@@ -24,7 +24,12 @@
 	text-align: left;
 	justify-self: flex-start;
 	align-self: flex-start;
-	float: left;
+	margin: 0;
+	button{
+		width: 20px;
+		min-width: auto;
+		min-height: auto;
+	}
 	i {
 		font-size: 25px;
 	}

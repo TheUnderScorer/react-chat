@@ -7,6 +7,7 @@
 	display: inline-block;
 	-webkit-animation: outer 6600ms linear infinite;
 	animation: outer 6600ms linear infinite;
+
 	svg{
 		-webkit-animation: inner 1320ms linear infinite;
 		animation: inner 1320ms linear infinite;
@@ -32,6 +33,15 @@
 	margin: 0;
 	left: 0;
 	top: 0;
+	opacity: 0;
+	visibility: hidden;
+	transition: all .5s;
+
+	&.visible{
+		opacity: 1;
+		visibility: visible;
+	}
+
 	&.input-loader{
 		justify-content: flex-end;
 	}

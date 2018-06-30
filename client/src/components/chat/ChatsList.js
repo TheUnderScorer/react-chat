@@ -25,13 +25,15 @@ class ChatsList extends Component {
 					<span>Create your first chat ;)</span>
 				</Link>
 			)
+		} else{
+
 		}
 
 	}
 
 	render() {
 		return (
-			<div class="chats">
+			<div className="chats">
 				{this.getList()}
 			</div>
 		);
