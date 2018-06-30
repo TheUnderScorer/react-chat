@@ -55,9 +55,9 @@ class Header extends Component {
 				<section className="profile has-submenu">
 					<Avatar avatarUrl={props.avatarUrl}/>
 					<ul className="submenu">
-						{this.state.isLoading &&
-						<Loader/>
-						}
+
+						<Loader visible={this.state.isLoading}/>
+
 						<li>
 							<Link to="/my-profile">My profile</Link>
 						</li>
