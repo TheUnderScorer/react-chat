@@ -23,7 +23,9 @@
   .return button {
     width: 20px;
     min-width: auto;
-    min-height: auto; }
+    min-height: auto;
+    background: transparent;
+    box-shadow: none; }
   .return i {
     font-size: 25px; }
 

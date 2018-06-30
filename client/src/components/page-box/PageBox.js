@@ -26,7 +26,7 @@ class PageBox extends Component {
 			<div className={props.big ? 'page-box big' : 'page-box'}>
 				{props.return &&
 				<Link to={props.return} className="return">
-					<Button variant="rised">
+					<Button variant="raised">
 						<i className="material-icons">arrow_back</i>
 					</Button>
 				</Link>
