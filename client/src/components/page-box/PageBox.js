@@ -7,24 +7,36 @@ import PropTypes from 'prop-types';
 class PageBox extends Component {
 
 	static defaultProps = {
-		return: ''
+		return: '',
+		title:  '',
+		big:    false,
 	};
 
 	static propTypes = {
-		return: PropTypes.string
+		return: PropTypes.string,
+		title:  PropTypes.string,
+		big:    PropTypes.bool
 	};
 
 	render() {
+
+		let props = this.props;
 		return (
-			<div className="page-box">
-				{this.props.return &&
-				<Link to={this.props.return} className="return">
+			<div className={props.big ? 'page-box big' : 'page-box'}>
+				{props.return &&
+				<Link to={props.return} className="return">
 					<i className="material-icons">arrow_back</i>
 				</Link>
 				}
-				{this.props.children}
+				{props.title &&
+				<h1 className="box-title">
+					{props.title}
+				</h1>
+				}
+				{props.children}
 			</div>
 		)
+
 	}
 
 }

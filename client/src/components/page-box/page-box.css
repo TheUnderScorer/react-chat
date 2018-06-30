@@ -8,7 +8,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  max-width: 30%; }
+  .page-box.big {
+    width: 50%;
+    height: 50%; }
 
 .return {
   text-decoration: none;
