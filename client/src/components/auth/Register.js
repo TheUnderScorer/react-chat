@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './auth.css';
-import {Link} from 'react-router-dom';
 import Api from '../../helpers/Api';
 import Input from "../form/Input";
 import Submit from "../form/Submit";
@@ -21,9 +20,9 @@ class Register extends Form {
 
 		Api.post( '/register', Fd ).then( data => {
 			this.setState( {
-				isLoading:     false,
-				messages:      data.messages,
-				result:        data.result
+				isLoading: false,
+				messages:  data.messages,
+				result:    data.result
 			} );
 		} )
 
@@ -37,7 +36,6 @@ class Register extends Form {
 
 				{state.isLoading && <Loader/>}
 
-				{/* If there are any errors, map them so that we get an array with only text, no objects */}
 				<Messages messages={state.messages}/>
 				<FormSection>
 					<Input name="login" id="login" label="Login"/>
