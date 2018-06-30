@@ -42,7 +42,7 @@ html, body, #root, .root-inner, .fixed-height {
 
 body {
   font: 18px 'Roboto', Arial;
-  overflow: hidden; }
+  overflow: auto; }
 
 .search-input {
   position: relative; }
