@@ -4,7 +4,7 @@ body {
 html, body, #root, .root-inner, .fixed-height {
   height: 100%; }
 
-.centered-container main {
+.centered {
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -75,7 +75,7 @@ body {
     padding: 20px;
     top: 0;
     color: #000000;
-    z-index: 90;
+    z-index: 2;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
     .has-submenu .submenu li {
       padding: 10px;

@@ -15,5 +15,19 @@
     border-bottom: 1px solid #4a4a4a; }
     .form-section input:focus {
       border-color: #3233c0; }
+  .form-section .input-notice {
+    color: #d51818;
+    font-size: 14px;
+    bottom: -10px; }
+
+.half-sections {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap; }
+  .half-sections .form-section {
+    width: 50%; }
+    .half-sections .form-section.full-section {
+      width: 100%; }
 
 /*# sourceMappingURL=form-section.css.map */
