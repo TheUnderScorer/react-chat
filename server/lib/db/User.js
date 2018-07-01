@@ -68,6 +68,13 @@ class User extends CollectionItem {
 
 		} );
 
+		this.schema.pre( 'findOneAndUpdate', function( next ) {
+
+			console.log( this );
+			next();
+
+		} );
+
 	}
 
 	async authenticate( emailOrLogin, password ) {
@@ -186,5 +193,6 @@ class User extends CollectionItem {
 	}
 
 }
+
 
 module.exports = new User();

@@ -1,9 +1,10 @@
 const Express    = require( 'express' ),
-	  App        = Express(),
+	  App        = Express(), //Our app ;)
 	  Session    = require( 'express-session' ),
-	  MongoStore = require( 'connect-mongo' )( Session ),
-	  BodyParser = require( 'body-parser' ),
-	  Connection = require( './db/connection' );
+	  Path       = require( 'path' ),
+	  MongoStore = require( 'connect-mongo' )( Session ), //Mongo session
+	  BodyParser = require( 'body-parser' ), //middleware for parsing requests
+	  Connection = require( './db/connection' ); //connection with mongo database
 
 //Setup session
 App.use( Session( {
@@ -15,10 +16,7 @@ App.use( Session( {
 	} )
 } ) );
 
-//Setup body parser
-App.use( BodyParser.urlencoded( {
-	extended: false
-} ) );
-App.use( BodyParser.json() );
+//Setup public path
+App.use( Express.static( Path.join( __dirname, 'public' ) ) );
 
 module.exports = App;

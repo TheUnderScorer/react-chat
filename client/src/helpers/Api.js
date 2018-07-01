@@ -38,16 +38,12 @@ class Api {
 	 * */
 	static async post( url, data ) {
 
-		if ( data instanceof FormData ) {
-			data = Api.formDataToJson( data );
-		}
-
 		let headers = new Headers( {
 				'Access-Control-Allow-Origin': '*',
-				'content-type':                'application/json'
+
 			} ),
 			opts    = {
-				body:        JSON.stringify( data ),
+				body:        data,
 				method:      'POST',
 				headers:     headers,
 				credentials: 'include'

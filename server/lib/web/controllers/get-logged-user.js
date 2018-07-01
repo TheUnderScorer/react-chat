@@ -1,5 +1,5 @@
 /**
- * Handles get-logged-user
+ * Handles get-logged-user endpoint
  *
  * @file is-logged-in.js
  *
@@ -9,7 +9,7 @@ const JsonResponse = require( '../../helpers/jsonResponse' ),
 	  User         = require( '../../db/user' ),
 	  Validator    = require( '../../helpers/Validator' );
 
-module.exports =async ( req, res ) => {
+module.exports = async ( req, res ) => {
 
 	const Json = new JsonResponse();
 
@@ -33,4 +33,4 @@ module.exports =async ( req, res ) => {
 
 	return res.json( Json );
 
-} ;
+};
