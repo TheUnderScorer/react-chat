@@ -38,6 +38,8 @@ module.exports = async ( req, res ) => {
 		//TODO Delete user avatar
 		if ( !!req.files.avatar && !!req.body.hasAvatar ) {
 
+		} else{
+			console.log( req.files.avatar );
 		}
 
 		await User.model.updateOne( { _id: req.session.userId }, newData );

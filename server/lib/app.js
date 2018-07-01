@@ -3,7 +3,6 @@ const Express    = require( 'express' ),
 	  Session    = require( 'express-session' ),
 	  Path       = require( 'path' ),
 	  MongoStore = require( 'connect-mongo' )( Session ), //Mongo session
-	  BodyParser = require( 'body-parser' ), //middleware for parsing requests
 	  Connection = require( './db/connection' ); //connection with mongo database
 
 //Setup session
@@ -17,6 +16,6 @@ App.use( Session( {
 } ) );
 
 //Setup public path
-App.use( Express.static( Path.join( __dirname, 'public' ) ) );
+App.use( Express.static( './uploads' ) );
 
 module.exports = App;
