@@ -6,8 +6,8 @@
  * */
 
 const JsonResponse = require( '../../helpers/jsonResponse' ),
-	  User         = require( '../../db/user' ),
-	  Chat         = require( '../../db/Chat' ),
+	  User         = require( '../../db/models/User' ),
+	  Chat         = require( '../../db/models/Chat' ),
 	  Validator    = require( '../../helpers/Validator' );
 
 module.exports = async ( req, res ) => {

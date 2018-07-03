@@ -6,7 +6,7 @@
  * */
 
 const JsonResponse = require( '../../helpers/jsonResponse' ),
-	  User         = require( '../../db/user' ),
+	  User         = require( '../../db/models/User' ),
 	  Bcrypt       = require( 'bcrypt' ),
 	  Validator    = require( '../../helpers/Validator' );
 
@@ -36,10 +36,8 @@ module.exports = async ( req, res ) => {
 		}
 
 		//TODO Delete user avatar
-		if ( !!req.files.avatar && !!req.body.hasAvatar ) {
-
-		} else{
-			console.log( req.files.avatar );
+		if ( !!req.files.avatar ) {
+			newData.avatarUrl = req.files.avatar[ 0 ].path.replace( 'uploads\\', '' );
 		}
 
 		await User.model.updateOne( { _id: req.session.userId }, newData );
@@ -48,8 +46,11 @@ module.exports = async ( req, res ) => {
 
 
 	} catch ( e ) {
+		console.log( e );
 		Json.addMessage( 'Error while saving profile.', 'error' );
 	}
+
+	console.log( Json );
 
 	return res.json( Json );
 

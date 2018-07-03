@@ -8,24 +8,20 @@ const Multer = require( 'multer' ), //Middleware for form based requests
 					  if ( req.session && req.session.userId ) {
 
 						  let userId = req.session.userId,
-							  path   = `./uploads/${req.session.userId}`;
+							  path   = `./uploads/${userId}`;
 
 						  if ( !Fs.existsSync( path ) ) {
 							  Fs.mkdirSync( path );
 						  }
 
-						  cb( null, `./uploads/${req.session.userId}` )
+						  cb( null, `./uploads/${userId}` )
 					  }
 				  },
 				  filename( req, file, cb ) {
-					  let ext = Path.extname( file.originalname );
+					  let ext  = Path.extname( file.originalname ),
+						  name = file.fieldname;
 
-					  let name;
-
-					  //Avatar upload
-					  if ( file.fieldname === 'avatar' ) {
-						  name = `avatar`
-					  } else {
+					  if ( name !== 'avatar' ) {
 						  //Chat upload
 						  name = `${file.fieldname}${Date.now()}`;
 					  }

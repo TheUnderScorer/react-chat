@@ -6,7 +6,7 @@
  * */
 
 const JsonResponse = require( '../../helpers/jsonResponse' ),
-	  User         = require( '../../db/user' ),
+	  User         = require( '../../db/models/User' ),
 	  Validator    = require( '../../helpers/Validator' );
 
 module.exports = ( req, res ) => {
