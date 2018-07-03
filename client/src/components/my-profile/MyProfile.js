@@ -1,17 +1,15 @@
 import React from 'react';
 import Form from '../form/Form';
-import PropTypes from 'prop-types';
 import Api from "../../helpers/Api";
 import Loader from "../loader/Loader";
-import PageBox from "../page-box/PageBox";
 import FormSection from "../form/FormSection";
 import Input from "../form/Input";
-import Header from "../header/Header";
-import Container from '../Container';
-import { Redirect } from 'react-router-dom';
 import Upload from "../form/Upload";
 import Submit from "../form/Submit";
 import Messages from "../form/Messages";
+import Home from '../home/Home';
+
+import './my-profile.css';
 
 class MyProfile extends Form {
 
@@ -31,17 +29,20 @@ class MyProfile extends Form {
 		Api.isLoggedIn().then( data => {
 
 			this.setState( {
-				isLoading:  false,
+				isLoading: false,
 			} );
 
 			if ( data.result ) {
+
 				this.setState( { isLoading: true } );
+
 				Api.getCurrentUser().then( data => {
 					this.setState( {
 						user:      data.result,
 						isLoading: false,
 					} );
 				} );
+
 			} else {
 				this.setState( {
 					user: false,
@@ -64,7 +65,9 @@ class MyProfile extends Form {
 			this.setState( {
 				messages:  data.messages,
 				isLoading: false,
-			} )
+			} );
+
+			Home.updateUser( data.result );
 		} );
 
 	}
@@ -72,8 +75,6 @@ class MyProfile extends Form {
 	render() {
 
 		let state = this.state;
-
-		console.log( state );
 
 		if ( !state.user ) {
 			return <Loader/>

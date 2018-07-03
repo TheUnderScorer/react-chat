@@ -14,6 +14,25 @@ import './home.css';
 
 class Home extends Component {
 
+	static instances = [];
+
+	/**
+	 * Update user data on all home instances
+	 *
+	 * @param {Object} user
+	 *
+	 * @return void
+	 * */
+	static updateUser( user ) {
+
+		for ( let instance of Home.instances ) {
+			instance.setState( {
+				user: user
+			} );
+		}
+
+	}
+
 	constructor() {
 
 		super();
@@ -23,7 +42,9 @@ class Home extends Component {
 			isLoading:  true,
 			user:       {},
 			chats:      {},
-		}
+		};
+
+		Home.instances.push( this );
 
 	}
 
@@ -41,6 +62,7 @@ class Home extends Component {
 			if ( data.result ) {
 
 				this.setState( { isLoading: true } );
+				
 				Api.getCurrentUser().then( data => {
 					this.setState( {
 						user: data.result,

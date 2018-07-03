@@ -29,7 +29,6 @@ module.exports = async ( req, res ) => {
 	try {
 		let newData = {};
 
-
 		//Let's change user password
 		if ( req.body.password !== '' ) {
 			newData.password = Bcrypt.hashSync( req.body.password, 10 );
@@ -42,11 +41,12 @@ module.exports = async ( req, res ) => {
 
 		await User.model.updateOne( { _id: req.session.userId }, newData );
 
-		Json.addMessage( 'Changes have been saved!', 'success' )
+		Json.addMessage( 'Changes have been saved!', 'success' );
+
+		Json.result = await User.getUser( req.session.userId )
 
 
 	} catch ( e ) {
-		console.log( e );
 		Json.addMessage( 'Error while saving profile.', 'error' );
 	}
 

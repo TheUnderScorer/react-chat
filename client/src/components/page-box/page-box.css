@@ -13,6 +13,9 @@
   .page-box.big {
     width: 50%; }
 
+.has-sub-menu .page-box {
+  min-width: 400px; }
+
 .return {
   text-decoration: none;
   text-align: left;

@@ -10,14 +10,7 @@ import PageBox from "../page-box/PageBox";
 
 class Header extends Component {
 
-	constructor() {
-		super();
-
-		this.state = {
-			isLoading:        false,
-			isEditingProfile: false,
-		}
-	}
+	static instances = [];
 
 	static defaultProps = {
 		avatarUrl: undefined,
@@ -26,6 +19,19 @@ class Header extends Component {
 	static propTypes = {
 		avatarUrl: PropTypes.string,
 	};
+
+	constructor() {
+
+		super();
+
+		this.state = {
+			isLoading:        false,
+			isEditingProfile: false,
+		};
+
+		Header.instances.push( this );
+
+	}
 
 	logout() {
 		this.setState( { isLoading: true } );
