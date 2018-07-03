@@ -5,11 +5,11 @@
  *
  * */
 
-const CollectionItem    = require( './CollectionItem' ),
+const CollectionItem    = require( '../CollectionItem' ),
 	  EmailVerification = require( './EmailVerification' ),
 	  EmailValidator    = require( 'email-validator' ),
-	  Validator         = require( '../helpers/Validator' ),
-	  Utility           = require( '../helpers/Utility' ),
+	  Validator         = require( '../../helpers/Validator' ),
+	  Utility           = require( '../../helpers/Utility' ),
 	  isset             = Utility.isset,
 	  Bcrypt            = require( 'bcrypt' );
 

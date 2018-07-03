@@ -6,9 +6,9 @@
  * */
 
 const Mongoose       = require( 'mongoose' ),
-	  CollectionItem = require( './CollectionItem' ),
+	  CollectionItem = require( '../CollectionItem' ),
 	  Bcrypt         = require( 'bcrypt' ),
-	  Mailer         = require( '../web/mailer' );
+	  Mailer         = require( '../../web/mailer' );
 
 class EmailVerification extends CollectionItem {
 
@@ -65,7 +65,7 @@ class EmailVerification extends CollectionItem {
 		try {
 
 			let token   = Bcrypt.hashSync( today + random, 10 ),
-				url     = require( '../settings' ).url,
+				url     = require( '../../settings' ).url,
 				message = `<p>To validate your e-mail <a href="${url}?token=${token}">click here.</a></p>`,
 				model   = new this.model( {
 					email:   email,
