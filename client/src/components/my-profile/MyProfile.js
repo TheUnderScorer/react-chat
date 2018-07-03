@@ -8,8 +8,10 @@ import FormSection from "../form/FormSection";
 import Input from "../form/Input";
 import Header from "../header/Header";
 import Container from '../Container';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Upload from "../form/Upload";
+import Submit from "../form/Submit";
+import Messages from "../form/Messages";
 
 class MyProfile extends Form {
 
@@ -18,7 +20,6 @@ class MyProfile extends Form {
 		super();
 
 		this.state.user = {};
-		this.state.redirect = false;
 
 	}
 
@@ -30,7 +31,6 @@ class MyProfile extends Form {
 		Api.isLoggedIn().then( data => {
 
 			this.setState( {
-				isLoggedIn: data.result,
 				isLoading:  false,
 			} );
 
@@ -44,7 +44,7 @@ class MyProfile extends Form {
 				} );
 			} else {
 				this.setState( {
-					redirect: true,
+					user: false,
 				} );
 			}
 
@@ -52,45 +52,69 @@ class MyProfile extends Form {
 
 	}
 
+	handleSubmit( e ) {
+
+		e.preventDefault();
+
+		let fd = new FormData( e.target );
+
+		this.setState( { isLoading: true } );
+
+		Api.post( '/user/edit', fd ).then( data => {
+			this.setState( {
+				messages:  data.messages,
+				isLoading: false,
+			} )
+		} );
+
+	}
+
 	render() {
 
 		let state = this.state;
 
-		if ( state.redirect ) {
-			return <Redirect to="/"/>
+		console.log( state );
+
+		if ( !state.user ) {
+			return <Loader/>
 		}
 
 		return (
-			<div className="fixed-height">
-				<Header {...state.user}/>
-				<Container className="my-profile">
-					<PageBox title="Edit profile" return="/">
-						<Loader visible={state.isLoading}/>
-						<form className="form" id="edit_profile_form">
 
-							<FormSection>
-								<Input value={state.user.login} label="Login" id="login" name="login" disabled={true}/>
-							</FormSection>
+			<div className="edit-profile">
+				<Loader visible={state.isLoading}/>
 
-							<FormSection>
-								<Input value={state.user.email} label="Email" id="email" name="email" disabled={true}/>
-								{!state.user.confirmed &&
-								<span className="input-notice">Your account is not confirmed</span>
-								}
-							</FormSection>
+				<form className="form" id="edit_profile_form" method="POST" action="#" onSubmit={e => this.handleSubmit( e )}>
 
-							<FormSection>
-								<Input label="Password" id="password" name="password" type="password"/>
-							</FormSection>
+					<Messages messages={state.messages}/>
 
-							<FormSection>
-								<Upload label="Avatar" type="image"/>
-							</FormSection>
+					<FormSection>
+						<Upload label="Avatar" name="avatar" id="avatar" type="image"/>
+					</FormSection>
 
-						</form>
-					</PageBox>
-				</Container>
+					<FormSection>
+						<Input value={state.user.login} label="Login" id="login" name="login" disabled={true}/>
+					</FormSection>
+
+					<FormSection>
+						<Input value={state.user.email} label="Email" id="email" name="email" disabled={true}/>
+						{!state.user.confirmed &&
+						<span className="input-notice">Your account is not confirmed</span>
+						}
+					</FormSection>
+
+					<FormSection>
+						<Input label="Password" id="password" name="password" type="password"/>
+					</FormSection>
+
+					<FormSection>
+						<Submit>Save</Submit>
+					</FormSection>
+
+				</form>
+
 			</div>
+
 		);
 	}
 

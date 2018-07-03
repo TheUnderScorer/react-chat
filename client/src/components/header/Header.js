@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from "./Avatar";
 import Api from "../../helpers/Api";
-import {Redirect, Link} from 'react-router-dom';
+import MyProfile from '../my-profile/MyProfile';
 import Loader from "../loader/Loader";
 
 import './css/header.css';
+import PageBox from "../page-box/PageBox";
 
 class Header extends Component {
 
@@ -13,36 +14,72 @@ class Header extends Component {
 		super();
 
 		this.state = {
-			isLoading: false,
+			isLoading:        false,
+			isEditingProfile: false,
 		}
 	}
 
 	static defaultProps = {
-		email:     '',
-		login:     '',
-		role:      '',
 		avatarUrl: undefined,
-		verified:  false,
-		_id:       '',
 	};
 
 	static propTypes = {
-		email:     PropTypes.string,
-		login:     PropTypes.string,
-		role:      PropTypes.string,
 		avatarUrl: PropTypes.string,
-		verified:  PropTypes.bool,
-		_id:       PropTypes.string,
 	};
 
-	logout( e ) {
+	logout() {
 		this.setState( { isLoading: true } );
 		Api.get( '/logout' ).then( result => window.location.reload() )
 	}
 
+	setEditProfile() {
+		this.setState( {
+			isEditingProfile: true
+		} )
+	}
+
+	unsetEditProfile() {
+		this.setState( {
+			isEditingProfile: false,
+		} )
+	}
+
+	getSubmenu() {
+
+		let state = this.state;
+
+		if ( state.isEditingProfile ) {
+			return (
+				<PageBox
+					return={() => this.unsetEditProfile()}
+					className="sub-menu"
+					big={true}>
+					<MyProfile/>
+				</PageBox>
+			)
+		} else {
+			return (
+				<ul className="sub-menu">
+
+					<Loader visible={state.isLoading}/>
+
+					<li onClick={e => this.setEditProfile()}>
+						<span>My profile</span>
+					</li>
+
+					<li onClick={e => this.logout()}>
+						<span>Logout</span>
+					</li>
+				</ul>
+			)
+		}
+
+	}
+
 	render() {
 
-		let props = this.props;
+		let props = this.props,
+			state = this.state;
 
 		return (
 
@@ -52,20 +89,9 @@ class Header extends Component {
 					<img src="" alt="Logo"/>
 				</section>
 
-				<section className="profile has-submenu">
+				<section className={state.isEditingProfile ? 'profile has-sub-menu active' : 'profile has-sub-menu'}>
 					<Avatar avatarUrl={props.avatarUrl}/>
-					<ul className="submenu">
-
-						<Loader visible={this.state.isLoading}/>
-
-						<li>
-							<Link to="/my-profile">My profile</Link>
-						</li>
-
-						<li onClick={this.logout.bind( this )}>
-							<span>Logout</span>
-						</li>
-					</ul>
+					{this.getSubmenu()}
 				</section>
 
 			</header>

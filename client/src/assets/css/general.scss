@@ -3,6 +3,7 @@
 
 body {
 	font-family: 'Roboto';
+	background-color: $bg;
 }
 
 html, body, #root, .root-inner, .fixed-height {
@@ -74,9 +75,9 @@ body {
 	}
 }
 
-.has-submenu {
+.has-sub-menu {
 	position: relative;
-	.submenu {
+	.sub-menu {
 		transition: all .3s;
 		opacity: 0;
 		visibility: hidden;
@@ -102,8 +103,8 @@ body {
 		}
 	}
 
-	&:hover {
-		.submenu {
+	&:hover, &.active {
+		.sub-menu {
 			opacity: 1;
 			visibility: visible;
 			margin-top: 50px;

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Api from '../../helpers/Api';
 import Login from '../auth/Login';
 import Container from '../Container';
@@ -8,7 +8,7 @@ import PageBox from "../page-box/PageBox";
 import Button from '@material-ui/core/Button/Button';
 import AddIcon from '@material-ui/icons/Add';
 import ChatsList from "../chat/ChatsList";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './home.css';
 
@@ -72,18 +72,21 @@ class Home extends Component {
 		} else {
 			return (
 				<div className="fixed-height">
-					<Header {...state.user}/>
+					<Header avatarUrl={state.user.avatarUrl}/>
+
 					<Container className="home">
 						<PageBox>
 							<Loader visible={state.isLoading}/>
 							<ChatsList chats={state.chats}/>
 						</PageBox>
 					</Container>
+
 					<Button className="floating-button" variant="fab" color="primary" aria-label="add">
 						<Link to="/create-chat">
 							<AddIcon/>
 						</Link>
 					</Button>
+
 				</div>
 			)
 		}

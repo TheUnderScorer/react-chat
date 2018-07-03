@@ -1,0 +1,40 @@
+.upload input[type=file] {
+  display: none; }
+.upload .upload-icon {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer; }
+.upload .upload-items {
+  display: flex;
+  flex-wrap: wrap; }
+  .upload .upload-items .upload-preview {
+    margin: 10px; }
+    .upload .upload-items .upload-preview img {
+      max-width: 100%;
+      display: block; }
+    .upload .upload-items .upload-preview:hover .upload-overlay {
+      opacity: 1;
+      visibility: visible; }
+    .upload .upload-items .upload-preview .upload-overlay {
+      cursor: pointer;
+      transition: all .3s;
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.5); }
+      .upload .upload-items .upload-preview .upload-overlay svg {
+        color: #ffffff;
+        font-size: 40px; }
+.upload .upload-label {
+  text-align: center; }
+
+/*# sourceMappingURL=upload.css.map */
